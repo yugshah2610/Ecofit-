@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoFit — Healthy You, Healthy Planet</title>
+
+<style>
+:root{
+  --green:#00ff9c;
+  --dark:#0b0f0e;
+  --card:#121b19;
+  --muted:#9bbfb1;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
+}
+
+body{
+  background:radial-gradient(circle at top,#10201a,var(--dark));
+  color:#e7fff5;
+}
+
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:80px 20px;
+}
+
+h1,h2,h3{color:var(--green)}
+p{color:var(--muted);line-height:1.7}
+
+.hero{
+  text-align:center;
+  padding:110px 20px 90px;
+}
+.hero h1{
+  font-size:3.3rem;
+  text-shadow:0 0 20px rgba(0,255,156,.4);
+}
+.hero p{
+  max-width:760px;
+  margin:20px auto;
+}
+
+.card{
+  background:var(--card);
+  padding:35px;
+  border-radius:18px;
+  box-shadow:0 0 25px rgba(0,255,156,.08);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+  margin-top:35px;
+}
+
+input,select{
+  width:100%;
+  padding:12px 15px;
+  margin:15px 0;
+  border-radius:12px;
+  border:none;
+  background:#0c1412;
+  color:#fff;
+  font-size:1rem;
+}
+
+button{
+  padding:12px 26px;
+  border-radius:30px;
+  border:1px solid var(--green);
+  background:transparent;
+  color:var(--green);
+  cursor:pointer;
+  transition:.3s;
+}
+button:hover{
+  background:var(--green);
+  color:#000;
+  box-shadow:0 0 18px rgba(0,255,156,.6);
+}
+
+.stat{
+  font-size:2.3rem;
+  margin-top:10px;
+}
+
+.bar{
+  background:#0c1412;
+  height:12px;
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:10px;
+}
+.fill{
+  height:100%;
+  width:0%;
+  background:var(--green);
+  transition:width 1s ease;
+}
+
+.badge{
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:20px;
+  background:#0c1412;
+  color:var(--green);
+  margin:6px 6px 0 0;
+  font-size:.9rem;
+}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:var(--muted);
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>EcoFit</h1>
+  <p>
+    Choose eco-friendly movement, burn calories, earn green impact,
+    and help build a healthier planet 🌍
+  </p>
+</div>
+
+<!-- PROBLEM -->
+<section>
+<h2>Problem Statement</h2>
+<p>
+Sedentary lifestyles and vehicle dependency increase health risks and carbon emissions.
+There is a lack of simple platforms that combine physical fitness with measurable
+environmental impact. EcoFit bridges this gap by turning daily activities into
+quantifiable health and sustainability insights.
+</p>
+</section>
+
+<!-- YOU VS PLANET -->
+<section>
+<h2>You vs The Planet</h2>
+<div class="grid">
+  <div class="card">
+    <h3>🚗 High-Carbon Choice</h3>
+    <p>Short vehicle trips increase pollution, fuel use, and health risks.</p>
+  </div>
+  <div class="card">
+    <h3>🚶 Low-Carbon Choice</h3>
+    <p>Walking, cycling, and running improve health and protect the environment.</p>
+  </div>
+</div>
+</section>
+
+<!-- ACTIVITY -->
+<section>
+<h2>Activity Tracker</h2>
+<div class="card">
+
+<label>Select Activity</label>
+<select id="activity" onchange="updateInput()">
+  <option value="">-- Choose Activity --</option>
+  <option value="walking">Walking (steps)</option>
+  <option value="cycling">Cycling (km)</option>
+  <option value="running">Running (minutes)</option>
+</select>
+
+<label id="inputLabel">Enter Value</label>
+<input type="number" id="value" placeholder="Select activity first">
+
+<button onclick="calculateImpact()">Calculate Impact</button>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h3>🔥 Calories Burnt</h3>
+    <div class="stat" id="calories">0</div>
+    <div class="bar"><div class="fill" id="calBar"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🌱 CO₂ Saved (kg)</h3>
+    <div class="stat" id="carbon">0</div>
+    <div class="bar"><div class="fill" id="carBar"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🌟 EcoScore</h3>
+    <div class="stat" id="ecoScore">0</div>
+  </div>
+</div>
+</section>
+
+<!-- BADGES -->
+<section>
+<h2>Eco Badges Earned</h2>
+<div id="badges"></div>
+</section>
+
+<!-- DID YOU KNOW -->
+<section>
+<h2>Did You Know?</h2>
+<p id="fact"></p>
+</section>
+
+<!-- DAILY CHALLENGE -->
+<section>
+<h2>Daily Eco Challenge</h2>
+<div class="card">
+<p id="challenge">Walk 3000 steps today 🌱</p>
+</div>
+</section>
+
+<!-- IF EVERYONE -->
+<section>
+<h2>If Everyone Did This…</h2>
+<p id="communityImpact"></p>
+</section>
+
+<!-- AGRICULTURE -->
+<section>
+<h2>Connection to Sustainable Agriculture</h2>
+<p>
+Reduced fuel usage lowers air and soil pollution, improving crop health.
+Healthier communities strengthen rural economies and support sustainable farming.
+EcoFit indirectly contributes to climate-resilient agriculture.
+</p>
+</section>
+
+<!-- FUTURE -->
+<section>
+<h2>Future Scope</h2>
+<ul style="color:var(--muted);line-height:1.8">
+  <li>Blockchain-based carbon credit wallet</li>
+  <li>Integration with wearables</li>
+  <li>Green reward tokens</li>
+  <li>Smart city sustainability dashboards</li>
+</ul>
+</section>
+
+<footer>
+EcoFit © 2026 | Healthy People • Healthy Planet
+</footer>
+
+<script>
+const facts=[
+"Walking 1 km saves enough CO₂ to power a fan for 2 hours.",
+"Cycling 5 km burns more calories than 20 minutes of yoga.",
+"Replacing short car trips can reduce urban emissions by 30%."
+];
+
+let index=0;
+setInterval(()=>{
+  document.getElementById("fact").innerText=facts[index];
+  index=(index+1)%facts.length;
+},3000);
+
+function updateInput(){
+  const a=document.getElementById("activity").value;
+  const l=document.getElementById("inputLabel");
+  const v=document.getElementById("value");
+  if(a==="walking"){l.innerText="Enter Steps";v.placeholder="e.g. 4000";}
+  else if(a==="cycling"){l.innerText="Enter Distance (km)";v.placeholder="e.g. 5";}
+  else if(a==="running"){l.innerText="Enter Time (minutes)";v.placeholder="e.g. 30";}
+}
+
+function calculateImpact(){
+  const a=document.getElementById("activity").value;
+  const v=parseFloat(document.getElementById("value").value);
+  if(!a||!v||v<=0){alert("Enter valid input");return;}
+
+  let cal=0, car=0;
+  if(a==="walking"){cal=v*0.04;car=(v/1000)*0.04;}
+  if(a==="cycling"){cal=v*30;car=v*0.21;}
+  if(a==="running"){cal=v*10;car=v*0.12;}
+
+  document.getElementById("calories").innerText=cal.toFixed(1);
+  document.getElementById("carbon").innerText=car.toFixed(2);
+
+  document.getElementById("calBar").style.width=Math.min(cal/10,100)+"%";
+  document.getElementById("carBar").style.width=Math.min(car*50,100)+"%";
+
+  const score=(cal+car*100).toFixed(0);
+  document.getElementById("ecoScore").innerText=score;
+
+  updateBadges(cal,car);
+  document.getElementById("communityImpact").innerText=
+    `If 1,000 people did this daily, ${ (car*1000).toFixed(0) } kg CO₂ would be saved per day.`;
+}
+
+function updateBadges(cal,car){
+  let html="";
+  if(cal>100) html+='<span class="badge">🌱 Green Starter</span>';
+  if(cal>300) html+='<span class="badge">🔥 Eco Warrior</span>';
+  if(car>1) html+='<span class="badge">🌍 Planet Hero</span>';
+  document.getElementById("badges").innerHTML=html;
+}
+</script>
+
+</body>
+</html>
